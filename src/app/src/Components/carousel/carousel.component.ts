@@ -22,27 +22,6 @@ export class CarouselComponent implements OnInit {
   currentIndex: number = 0;
 
   products: any[] = [];
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    navSpeed: 700,
-    navText: ['<', '>'],
-    responsive: {
-      0: {
-        items: 1,
-      },
-      600: {
-        items: 3,
-      },
-      1000: {
-        items: 5,
-      },
-    },
-    nav: true,
-  };
 
   constructor(private productService: ProductService) {}
 
@@ -51,9 +30,16 @@ export class CarouselComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productService.getProdutosByCategoria(this.title).subscribe(data => {
-      this.products = data;
-    });
+    if (this.title=='Tudo' || this.title=='tudo') {
+      this.productService.getProducts().subscribe(data => {
+        this.products = data;
+      });
+    }
+    else{
+      this.productService.getProdutosByCategoria(this.title).subscribe(data => {
+        this.products = data;
+      });
+    }
   }
 
 
