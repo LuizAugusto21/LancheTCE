@@ -13,6 +13,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatToolbarModule,
     MatSlideToggleModule,
 
+
     
   ],
   templateUrl: './app.component.html',
