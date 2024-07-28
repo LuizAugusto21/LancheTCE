@@ -1,0 +1,30 @@
+.mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .spacer {
+    flex: 1;
+  }
+  
+  .avatar-title-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar-icon {
+    font-size: 25px; 
+    margin-right: 8px; 
+  }
+  
+  .title {
+    font-size: 20px; 
+    color: white; 
+  }
+  
+  img {
+    display: block;
+    max-height: 40px;
+  }
+  

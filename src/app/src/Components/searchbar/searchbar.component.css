@@ -1,0 +1,15 @@
+.pesquisa{
+    
+    height: 45px; 
+    width: 480px;
+    font-size: 16px;
+    padding: 5px 30px 5px 10px;  
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+
+    align-self: center;
+}
