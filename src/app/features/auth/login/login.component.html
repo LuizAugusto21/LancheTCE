@@ -1,0 +1,15 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email">
+    <mat-error *ngIf="loginForm.get('email')?.invalid">Email inválido</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Senha</mat-label>
+    <input matInput formControlName="senha" type="password">
+    <mat-error *ngIf="loginForm.get('senha')?.invalid">Senha inválida</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Login</button>
+</form>
