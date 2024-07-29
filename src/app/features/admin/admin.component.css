@@ -1,0 +1,23 @@
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.admin-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3f51b5;
+  padding: 0 16px;
+  color: white;
+}
+
+.admin-nav button {
+  color: white;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 16px;
+}

@@ -7,36 +7,74 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5121/api/Usuario'; // URL da API
-  private authenticated = false; // Estado de autenticação
+  private apiUrl = 'http://localhost:5121/api/Usuario';
+  private authenticated = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.checkAuthentication();
+  }
 
-  // Método para login
-  login(email: string, senha: string): Observable<boolean> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, senha })
+  register(nome: string, email: string, senha: string, perfil: string, contato: string, enderecoAndar: string, enderecoSala: string, enderecoDepartamento: string): Observable<boolean> {
+    const user = {
+      nome,
+      email,
+      senha,
+      perfil,
+      contato,
+      endereco: {
+        andar: enderecoAndar,
+        sala: enderecoSala,
+        departamento: enderecoDepartamento
+      }
+    };
+
+    return this.http.post<any>(`${this.apiUrl}`, user)
       .pipe(
         tap(response => {
-          // Supondo que a resposta indica sucesso de login
-          this.authenticated = true; // Definir como autenticado
+          if (response?.token) {
+            localStorage.setItem('token', response.token);
+            this.authenticated = true;
+          }
         }),
         catchError(() => {
-          // Caso haja erro, definir como não autenticado
           this.authenticated = false;
-          return of(false); // Retornar false indicando falha no login
+          return of(false);
         })
       );
   }
 
-  // Método para logout
-  logout(): void {
-    this.authenticated = false; // Definir como não autenticado
-    // Se houver um endpoint de logout, você pode fazer uma chamada para ele aqui
-    // Exemplo: this.http.post(`${this.apiUrl}/logout`, {}).subscribe();
+  login(email: string, senha: string): Observable<boolean> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, senha })
+      .pipe(
+        tap(response => {
+          if (response?.token) {
+            localStorage.setItem('token', response.token);
+            this.authenticated = true;
+          }
+        }),
+        catchError(() => {
+          this.authenticated = false;
+          return of(false);
+        })
+      );
   }
 
-  // Verifica se o usuário está autenticado
+  private checkAuthentication(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
+    }
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.authenticated = false;
+  }
+
   isAuthenticated(): boolean {
     return this.authenticated;
   }
 }
+
