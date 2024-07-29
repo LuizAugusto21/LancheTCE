@@ -28,10 +28,12 @@ export const routes: Route[] = [
   {
     path: 'vender',
     loadComponent: () => import('./src/Pages/vender/vender.component').then(m => m.VenderComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'home',
     loadComponent: () => import('./src/Pages/home/home.component').then(m => m.HomeComponent),
+    canActivate: [AuthGuard]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

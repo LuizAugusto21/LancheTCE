@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedModule } from '../../../shared/shared.module';
 import { AuthService } from '../../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
+import { MatError } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     SharedModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatError
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
