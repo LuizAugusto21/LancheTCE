@@ -38,7 +38,7 @@ export class LoginComponent {
       const { email, senha } = this.loginForm.value;
       this.authService.login(email, senha).subscribe(success => {
         if (success) {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/home']);
         } else {
           this.snackBar.open('Login falhou. Verifique suas credenciais.', 'Fechar', {
             duration: 3000,
