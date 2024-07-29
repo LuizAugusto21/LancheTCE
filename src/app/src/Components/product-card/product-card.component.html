@@ -1,14 +1,14 @@
 <mat-card class="example-card" appearance="outlined">
   <mat-card-header>
-    <mat-card-title>Coxinha</mat-card-title>
+    <mat-card-title>{{product.nome}}</mat-card-title>
   </mat-card-header>
-  <img
+  <img class="imagemDoProduto"
     mat-card-image
-    src="https://www.cnnbrasil.com.br/viagemegastronomia/wp-content/uploads/sites/5/2023/02/coxinha-g772e5ca7a_1920.jpg"
-    alt="Photo of a Shiba Inu"
+    src={{product.imagemUrl}}
+    alt="Imagem do produto {{product.image}}"
   />
   <mat-card-content>
-    <p>R$ 4,00</p>
+    <p>R$ {{product.preco}}</p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-flat-button>Comprar</button>
