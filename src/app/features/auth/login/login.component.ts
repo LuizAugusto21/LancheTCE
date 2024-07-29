@@ -19,12 +19,9 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required]]
@@ -36,9 +33,10 @@ export class LoginComponent {
       const { email, senha } = this.loginForm.value;
       this.authService.login(email, senha).subscribe(success => {
         if (success) {
-          this.router.navigate(['/']);
+          // Redirecionar baseado no perfil do usuário (exemplo)
+          this.router.navigate(['/admin']); // Ajuste o redirecionamento conforme necessário
         } else {
-          // Mostrar mensagem de erro
+          this.errorMessage = 'Login falhou. Verifique suas credenciais.';
         }
       });
     }
