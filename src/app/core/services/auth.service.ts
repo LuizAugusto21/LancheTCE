@@ -1,54 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5121/api/Usuario'; // URL da sua API
+  private apiUrl = 'http://localhost:5121/api/Usuario'; // URL da API
+  private authenticated = false; // Estado de autenticação
 
   constructor(private http: HttpClient) { }
 
-  // Método para fazer login
+  // Método para login
   login(email: string, senha: string): Observable<boolean> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, senha })
       .pipe(
-        map(response => {
-          // Supondo que a API retorne um token
-          if (response.token) {
-            localStorage.setItem('authToken', response.token);
-            return true;
-          } else {
-            return false;
-          }
+        tap(response => {
+          // Supondo que a resposta indica sucesso de login
+          this.authenticated = true; // Definir como autenticado
         }),
-        catchError(error => {
-          console.error('Login error', error);
-          return of(false);
+        catchError(() => {
+          // Caso haja erro, definir como não autenticado
+          this.authenticated = false;
+          return of(false); // Retornar false indicando falha no login
         })
       );
   }
 
-  // Método para fazer logout
+  // Método para logout
   logout(): void {
-    localStorage.removeItem('authToken');
+    this.authenticated = false; // Definir como não autenticado
+    // Se houver um endpoint de logout, você pode fazer uma chamada para ele aqui
+    // Exemplo: this.http.post(`${this.apiUrl}/logout`, {}).subscribe();
   }
 
-  // Método para verificar se o usuário está autenticado
+  // Verifica se o usuário está autenticado
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('authToken');
-  }
-
-  // Método para obter o perfil do usuário logado
-  getUserProfile(): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      return of(null);
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/profile`, { headers });
+    return this.authenticated;
   }
 }
