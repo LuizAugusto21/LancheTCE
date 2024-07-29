@@ -7,6 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProductService {
+
   private apiUrl = 'http://localhost:5121/Produtos';
   private productsSubject = new BehaviorSubject<any[]>([]);
   products$ = this.productsSubject.asObservable();
@@ -35,6 +36,10 @@ export class ProductService {
 
   PesquisaProduto(busca: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/filter/nome/pagination?Nome=${busca}&PageNumber=1&PageSize=5`);
+  }
+
+  addProduct(product: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, product);
   }
 
   // Método para obter os produtos em cache
