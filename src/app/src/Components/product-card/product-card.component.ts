@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input  } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -24,4 +24,7 @@ import {
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })
-export class ProductCardComponent {}
+export class ProductCardComponent {
+
+  @Input() product: any;
+}

@@ -12,6 +12,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatButtonModule,
     MatToolbarModule,
     MatSlideToggleModule,
+
+
+    
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
